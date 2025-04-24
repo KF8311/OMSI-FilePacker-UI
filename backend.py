@@ -39,9 +39,11 @@ import struct
 #  Copyright (c) 2022 Thomas Mathieson.
 # ==============================================================================
 
+source_directory = None
 
-
-
+def read_omsi_path(input_path):
+    global source_directory
+    source_directory = input_path
 def log(*args):
     print("[O3DConvert]", *args)
 
@@ -447,13 +449,10 @@ def pack_files(source_dir, output_zip_file, file_paths):
         lines = file.read().splitlines()
         file_paths = lines
         return file_paths'''
-def read_omsi_path(input_path):
-    source_directory = input_path
-    print(source_directory)
 
 output_zip_file = "packed_files.zip"
 file_list_path = "file_paths.txt"
-source_directory = '.'
+
 file_paths = read_file_paths(file_list_path)
 print(file_paths) 
 pack_files(source_directory, output_zip_file, file_paths)
