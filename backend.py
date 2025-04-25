@@ -34,16 +34,42 @@ import os
 import zipfile
 import struct
 
+# from frontend import missing_files
 
 # ==============================================================================
 #  Copyright (c) 2022 Thomas Mathieson.
 # ==============================================================================
-
-source_directory = None
+# backend.py
+# Shared variables
+source_directory = '.'  # Default to current directory
+output_zip_file = "packed_files.zip"
+file_paths = []
+missing_files = []
 
 def read_omsi_path(input_path):
     global source_directory
-    source_directory = input_path
+    if source_directory.strip():
+        source_directory = input_path.strip()
+    else:
+        source_directory = '.'
+    print(f"OMSI Path Set: {source_directory}")
+
+def read_zip_file_name(input_name):
+    global output_zip_file
+    if input_name.strip():
+        output_zip_file = os.path.join(source_directory, f"{input_name}.zip")
+    else:
+        output_zip_file = os.path.join(source_directory, "packed_files.zip")
+    print(f"Output ZIP: {output_zip_file}")
+
+def read_missing_files(missing_files_list):
+    global file_paths
+    file_paths = [line.strip() for line in missing_files_list.splitlines() if line.strip()]
+    print(f"Files to Pack: {file_paths}")
+
+def return_missing_files_list():
+    return missing_files
+
 def log(*args):
     print("[O3DConvert]", *args)
 
@@ -289,10 +315,8 @@ def read_sco(file):
         # print(fole[count])
         if fole[count] == '[mesh]':
             o3dfile = fole[count + 1].strip()
-            # print(o3dfile)
-            # exit()
             try:
-                o3d = open(f'{file_directory}/model/{o3dfile}', 'rb')
+                o3d = open(os.path.join(file_directory, o3dfile), 'rb')
             except FileNotFoundError:
                 print(f'File {o3dfile} not found.')
                 count += 1
@@ -334,15 +358,18 @@ def read_sli(file):
         count += 1
     return matls_from_sli
 
-
 def pack_files(source_dir, output_zip_file, file_paths):
-    # open("did_not_pack.txt", 'w').close()
     file_ls = []
     folder_ls = []
+    global missing_files
+    missing_files = []  # List to store missing files with \n at the end
+
     file_paths = [each.strip() for each in file_paths if each.strip() != '']
     for each1 in file_paths:
-        if each1.endswith('.sco'):
-            aaa = read_sco(os.path.join(source_dir, each1))
+        for each1 in file_paths:
+            if each1.endswith('.sco'):
+                full_sco_path = os.path.join(source_dir, each1)
+                aaa = read_sco(full_sco_path)
             for each2 in aaa[0]:
                 if each2 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/texture/{each2}")
@@ -350,7 +377,6 @@ def pack_files(source_dir, output_zip_file, file_paths):
                 if each3 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/model/{each3}")
         if each1.endswith('.sli'):
-            # print(each1)
             aaa = read_sli(os.path.join(source_dir, each1))
             print(aaa)
             for each2 in aaa:
@@ -370,8 +396,7 @@ def pack_files(source_dir, output_zip_file, file_paths):
                 print(full_path, file_path)
             except FileNotFoundError:
                 print(f'File {full_path} not found.')
-                with open("did_not_pack.txt", 'a') as f:
-                    f.write(f'{full_path}\n')
+                missing_files.append(f'{full_path}\n')  # Append with \n
                 continue
 
         # Include additional files from the lists
@@ -383,13 +408,11 @@ def pack_files(source_dir, output_zip_file, file_paths):
                     print(full_path, file_path)
                 except FileNotFoundError:
                     print(f'File {full_path} not found.')
-                    with open("did_not_pack.txt", 'a') as f:
-                        f.write(f'{full_path}\n')
+                    missing_files.append(f'{full_path}\n')  # Append with \n
                     continue
             else:
                 print(f'File {full_path} not found.')
-                with open("did_not_pack.txt", 'a') as f:
-                    f.write(f'{full_path}\n')
+                missing_files.append(f'{full_path}\n')  # Append with \n
                 continue
         for folders in folder_ls:
             folder_path = os.path.join(source_dir, folders)
@@ -402,9 +425,12 @@ def pack_files(source_dir, output_zip_file, file_paths):
                             print(file_full_path, os.path.relpath(file_full_path, source_dir))
                         except FileNotFoundError:
                             print(f'File {file_full_path} not found.')
-                            with open("did_not_pack.txt", 'a') as f:
-                                f.write(f'{file_full_path}\n')
+                            missing_files.append(f'{file_full_path}\n')  # Append with \n
                             continue
+    return missing_files
+'''def return_missing_files_list():
+    global missing_files
+    return missing_files'''
                         
     # print(file_paths)
 
@@ -453,6 +479,6 @@ def pack_files(source_dir, output_zip_file, file_paths):
 output_zip_file = "packed_files.zip"
 file_list_path = "file_paths.txt"
 
-file_paths = read_file_paths(file_list_path)
+# file_paths = read_file_paths(file_list_path)
 print(file_paths) 
 pack_files(source_directory, output_zip_file, file_paths)
