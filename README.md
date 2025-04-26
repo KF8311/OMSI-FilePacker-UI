@@ -3,7 +3,7 @@
 Packs scenery objects, splines, and their corresponding textures and models from a provided list.
 
 - **Credit**  
-  [Thomas Mathieson and his Blender o3d Plugin](https://github.com/space928/Blender-O3D-IO-Public)
+  [Thomas Mathieson and his Blender o3d Plugin](https://github.com/space928/Blender-O3D-IO-Public) <br>
   [KC x RT Workshop and the Missing Files Packing Python scipt](https://github.com/lmoadeck-Lunity/OMSI-FilePacker/tree/main)
 
 ## Instructions
@@ -17,7 +17,7 @@ Packs scenery objects, splines, and their corresponding textures and models from
 6. TLDR2: If you have [Python](https://www.python.org/downloads/) 3.12+ installed, you may also download the frontend.py AND backend.py and compile the frontend.py by using Powershell or Command Prompt
 Both ways, you can use the Powershell to see the log of the operation
 
-## Example `file_paths.txt` Content
+## Example Input "Input Missing Objects"
 
 ```txt
 Sceneryobjects\3dtranstudio\hkstreet\ped_1_5_end_a.sco
