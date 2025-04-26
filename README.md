@@ -4,6 +4,7 @@ Packs scenery objects, splines, and their corresponding textures and models from
 
 - **Credit**  
   [Thomas Mathieson and his Blender o3d Plugin](https://github.com/space928/Blender-O3D-IO-Public)
+  [KC x RT Workshop and the Missing Files Packing Python scipt](https://github.com/lmoadeck-Lunity/OMSI-FilePacker/tree/main)
 
 ## Instructions
 
@@ -13,6 +14,8 @@ Packs scenery objects, splines, and their corresponding textures and models from
 3. Run the script.
 4. You will receive a ZIP file and a `did not find.txt` file listing any missing files.
 5. TLDR: Just download the exe: [Download OMSI Missing Files Packer UI](https://raw.githubusercontent.com/KF8311/OMSI-FilePacker-UI/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
+6. TLDR2: If you have [Python](https://www.python.org/downloads/) 3.12+ installed, you may also download the frontend.py AND backend.py and compile the frontend.py by using Powershell or Command Prompt
+Both ways, you can use the Powershell to see the log of the operation
 
 ## Example `file_paths.txt` Content
 
