@@ -12,7 +12,7 @@ Packs scenery objects, splines, and their corresponding textures and models from
    *Note:* To pack a whole folder, end the file path with `\*`.
 3. Run the script.
 4. You will receive a ZIP file and a `did not find.txt` file listing any missing files.
-
+5. TLDR: Just download the exe: [Download OMSI Missing Files Packer UI](https://github.com/KF8311/OMSI-FilePacker-UI/blob/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
 ## Example `file_paths.txt` Content
 
 ```txt
