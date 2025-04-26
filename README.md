@@ -26,3 +26,6 @@ Splines\47x city\surface mark\str11.sli
 Splines\Splines\296d\3str_2spur_8m_ll_line_bridge_concrete_oneway.sli
 Splines\Splines\Splines\taxidriverhk_nopaths\2lanes_noped_verywide.sli
 Sceneryobjects\Map E31\*
+```
+
+![Photo](OMSI_file_packer_showcase_photo.png)
