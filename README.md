@@ -8,13 +8,17 @@ Packs scenery objects, splines, and their corresponding textures and models from
 
 ## Instructions
 
-1. Place the script in the root folder of your OMSI installation, e.g., `X:\OMSI 2 Steam Edition` or `X:\SteamLibrary\steamapps\common\OMSI 2`.
-2. Create a text file named `file_paths.txt` (or a different name, which can be changed inside the script) and add the filenames of the scenery objects and splines you want to pack.  
-   *Note:* To pack a whole folder, end the file path with `\*`.
-3. Run the script.
-4. You will receive a ZIP file and a `did not find.txt` file listing any missing files.
+~1. Place the script in the root folder of your OMSI installation, e.g., `X:\OMSI 2 Steam Edition` or `X:\SteamLibrary\steamapps\common\OMSI 2`.~ <br><br>
+~2. Create a text file named `file_paths.txt` (or a different name, which can be changed inside the script) and add the filenames of the scenery objects and splines you want to pack.~ <br><br>
+   *Note:* To pack a whole folder, end the file path with `\*`. <br><br>
+3. Run the script.<br>
+<br>
+4. You will receive a ZIP file ~and a `did not find.txt` file listing any missing files.~ <br>
+<br>
 5. TLDR: Just download the exe: [Download OMSI Missing Files Packer UI](https://raw.githubusercontent.com/KF8311/OMSI-FilePacker-UI/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
-6. TLDR2: If you have [Python](https://www.python.org/downloads/) 3.12+ installed, you may also download the frontend.py AND backend.py and compile the frontend.py by using Powershell or Command Prompt
+<br>
+<br>
+6. TLDR2: If you have [Python](https://www.python.org/downloads/) 3.12+ installed, or you are worrying the "unsafe" .exe file, you may also download the frontend.py AND backend.py (but remove everything about ico) and compile the frontend.py by using Powershell or Command Prompt
 Both ways, you can use the Powershell to see the log of the operation
 
 ## Example Input "Input Missing Objects"
