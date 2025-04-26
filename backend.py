@@ -301,6 +301,7 @@ def read_sco(file):
         fole = open(file, 'r', encoding='utf-8',errors="ignore").readlines()
     except FileNotFoundError:
         print(f'File {file} not found.')
+        missing_files.append(f'{file}\n')
         with open("did_not_pack.txt", 'a') as f:
             f.write(f'{file}\n')
         return matls_from_o3d, meshs_from_sco
@@ -344,6 +345,7 @@ def read_sli(file):
         sli = open(file, 'r', encoding='utf-8',errors="ignore").readlines()
     except FileNotFoundError:
         print(f'File {file} not found.')
+        missing_files.append(f'{file}\n')
         with open("did_not_pack.txt", 'a') as f:
             f.write(f'{file}\n')
         return set()
@@ -396,7 +398,7 @@ def pack_files(source_dir, output_zip_file, file_paths):
                 print(full_path, file_path)
             except FileNotFoundError:
                 print(f'File {full_path} not found.')
-                missing_files.append(f'{full_path}\n')  # Append with \n
+                # missing_files.append(f'{full_path}\n')  # Append with \n
                 continue
 
         # Include additional files from the lists
@@ -408,11 +410,11 @@ def pack_files(source_dir, output_zip_file, file_paths):
                     print(full_path, file_path)
                 except FileNotFoundError:
                     print(f'File {full_path} not found.')
-                    missing_files.append(f'{full_path}\n')  # Append with \n
+                    # missing_files.append(f'{full_path}\n')  # Append with \n
                     continue
             else:
                 print(f'File {full_path} not found.')
-                missing_files.append(f'{full_path}\n')  # Append with \n
+                # missing_files.append(f'{full_path}\n')  # Append with \n
                 continue
         for folders in folder_ls:
             folder_path = os.path.join(source_dir, folders)
@@ -425,7 +427,7 @@ def pack_files(source_dir, output_zip_file, file_paths):
                             print(file_full_path, os.path.relpath(file_full_path, source_dir))
                         except FileNotFoundError:
                             print(f'File {file_full_path} not found.')
-                            missing_files.append(f'{file_full_path}\n')  # Append with \n
+                            # missing_files.append(f'{file_full_path}\n')  # Append with \n
                             continue
     return missing_files
 '''def return_missing_files_list():
