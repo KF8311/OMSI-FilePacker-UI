@@ -32,7 +32,7 @@ def save_to_registry():
         # Save the value (REG_SZ for a string)
         winreg.SetValueEx(key, REG_VALUE_NAME, 0, winreg.REG_SZ, text_value)
         winreg.CloseKey(key)
-        print("Saved", "Textbox content saved successfully!")
+        print("OMSI Path saved successfully!")
     except Exception as e:
         print("Error", f"Failed to save data: {e}")
 

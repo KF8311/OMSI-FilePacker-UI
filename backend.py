@@ -302,8 +302,8 @@ def read_sco(file):
     except FileNotFoundError:
         print(f'File {file} not found.')
         missing_files.append(f'{file}\n')
-        with open("did_not_pack.txt", 'a') as f:
-            f.write(f'{file}\n')
+        # with open("did_not_pack.txt", 'a') as f:
+          #   f.write(f'{file}\n')
         return matls_from_o3d, meshs_from_sco
     fole = [each.strip() for each in fole if each.strip() != '']
     count = 0
@@ -346,8 +346,8 @@ def read_sli(file):
     except FileNotFoundError:
         print(f'File {file} not found.')
         missing_files.append(f'{file}\n')
-        with open("did_not_pack.txt", 'a') as f:
-            f.write(f'{file}\n')
+        # with open("did_not_pack.txt", 'a') as f:
+            # f.write(f'{file}\n')
         return set()
     sli = [each.strip() for each in sli if each.strip() != '']
     matls_from_sli = set()
@@ -368,23 +368,26 @@ def pack_files(source_dir, output_zip_file, file_paths):
 
     file_paths = [each.strip() for each in file_paths if each.strip() != '']
     for each1 in file_paths:
-        for each1 in file_paths:
-            if each1.endswith('.sco'):
-                full_sco_path = os.path.join(source_dir, each1)
-                aaa = read_sco(full_sco_path)
+        # Remove the inner loop and add conditional checks
+        if each1.endswith('.sco'):
+            full_sco_path = os.path.join(source_dir, each1)
+            aaa = read_sco(full_sco_path)  # Now properly scoped
+            # Process SCO files
             for each2 in aaa[0]:
                 if each2 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/texture/{each2}")
             for each3 in aaa[1]:
                 if each3 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/model/{each3}")
-        if each1.endswith('.sli'):
+
+        elif each1.endswith('.sli'):  # <--- ADD EXPLICIT ELIF
             aaa = read_sli(os.path.join(source_dir, each1))
             print(aaa)
             for each2 in aaa:
                 if each2 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/texture/{each2}")
-        if each1.endswith('\\*'):
+
+        if each1.endswith('\\*'):  # <--- SEPARATE WILDCARD HANDLING
             each1 = each1[:-1]
             folder_ls.append(each1)
 
@@ -433,7 +436,7 @@ def pack_files(source_dir, output_zip_file, file_paths):
 '''def return_missing_files_list():
     global missing_files
     return missing_files'''
-                        
+
     # print(file_paths)
 
 
@@ -471,7 +474,7 @@ def pack_files(source_dir, output_zip_file, file_paths):
             #             for file in files:
             #                 file_full_path = os.path.join(root, file)
             #                 zip_file.write(file_full_path, os.path.relpath(file_full_path, source_dir))
-                            
+
 '''def read_file_paths(file_list_path):
     with open(file_list_path, 'r') as file:
         lines = file.read().splitlines()
