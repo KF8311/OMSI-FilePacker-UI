@@ -301,9 +301,8 @@ def read_sco(file):
         fole = open(file, 'r', encoding='utf-8',errors="ignore").readlines()
     except FileNotFoundError:
         print(f'File {file} not found.')
-        missing_files.append(f'{file}\n')
-        # with open("did_not_pack.txt", 'a') as f:
-          #   f.write(f'{file}\n')
+        with open("did_not_pack.txt", 'a') as f:
+            f.write(f'{file}\n')
         return matls_from_o3d, meshs_from_sco
     fole = [each.strip() for each in fole if each.strip() != '']
     count = 0
@@ -316,8 +315,10 @@ def read_sco(file):
         # print(fole[count])
         if fole[count] == '[mesh]':
             o3dfile = fole[count + 1].strip()
+            # print(o3dfile)
+            # exit()
             try:
-                o3d = open(os.path.join(file_directory, o3dfile), 'rb')
+                o3d = open(f'{file_directory}/model/{o3dfile}', 'rb')
             except FileNotFoundError:
                 print(f'File {o3dfile} not found.')
                 count += 1

@@ -21,7 +21,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='OMSI Missing Files Packer UI',
+    name='omsi-file-packer',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -32,7 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['omsi-file-packer-logo.ico'],
+    icon=['omsi-file-packer.ico'],
 )
 coll = COLLECT(
     exe,
@@ -41,5 +41,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='OMSI Missing Files Packer UI',
+    name='omsi-file-packer',
 )

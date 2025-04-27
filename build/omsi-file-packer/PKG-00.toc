@@ -1,5 +1,4 @@
-('D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer UI\\OMSI '
- 'Missing Files Packer UI.pkg',
+('D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\omsi-file-packer.pkg',
  {'BINARY': True,
   'DATA': True,
   'EXECUTABLE': True,
@@ -11,28 +10,22 @@
   'SYMLINK': False},
  [('pyi-contents-directory _internal', '', 'OPTION'),
   ('PYZ-00.pyz',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\PYZ-00.pyz',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\localpycs\\struct.pyc',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\localpycs\\struct.pyc',
    'PYMODULE'),
   ('pyimod01_archive',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\localpycs\\pyimod01_archive.pyc',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\localpycs\\pyimod01_archive.pyc',
    'PYMODULE'),
   ('pyimod02_importers',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\localpycs\\pyimod02_importers.pyc',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\localpycs\\pyimod02_importers.pyc',
    'PYMODULE'),
   ('pyimod03_ctypes',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\localpycs\\pyimod03_ctypes.pyc',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\localpycs\\pyimod03_ctypes.pyc',
    'PYMODULE'),
   ('pyimod04_pywin32',
-   'D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI Missing Files Packer '
-   'UI\\localpycs\\pyimod04_pywin32.pyc',
+   'D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\localpycs\\pyimod04_pywin32.pyc',
    'PYMODULE'),
   ('pyiboot01_bootstrap',
    'C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
