@@ -46,6 +46,7 @@ output_zip_file = "packed_files.zip"
 file_paths = []
 missing_files = []
 
+
 def read_omsi_path(input_path):
     global source_directory
     if source_directory.strip():
@@ -53,6 +54,7 @@ def read_omsi_path(input_path):
     else:
         source_directory = '.'
     print(f"OMSI Path Set: {source_directory}")
+
 
 def read_zip_file_name(input_name):
     global output_zip_file
@@ -62,13 +64,16 @@ def read_zip_file_name(input_name):
         output_zip_file = os.path.join(source_directory, "packed_files.zip")
     print(f"Output ZIP: {output_zip_file}")
 
+
 def read_missing_files(missing_files_list):
     global file_paths
     file_paths = [line.strip() for line in missing_files_list.splitlines() if line.strip()]
     print(f"Files to Pack: {file_paths}")
 
+
 def return_missing_files_list():
     return missing_files
+
 
 def log(*args):
     print("[O3DConvert]", *args)
@@ -225,14 +230,14 @@ def import_transform(buff, offset):
     m = struct.unpack_from("<ffffffffffffffff", buff, offset=offset)
     offset += 16 * 4
     return (
-               (m[0], m[4], m[8], m[12]),
-               (m[1], m[5], m[9], m[13]),
-               (m[2], m[6], m[10], m[14]),
-               (m[3], m[7], m[11], m[15])
-           ), offset
+        (m[0], m[4], m[8], m[12]),
+        (m[1], m[5], m[9], m[13]),
+        (m[2], m[6], m[10], m[14]),
+        (m[3], m[7], m[11], m[15])
+    ), offset
 
 
-def import_o3d(packed_bytes,name):
+def import_o3d(packed_bytes, name):
     header = struct.unpack_from("<BBB", packed_bytes, offset=0)
     off = 3
     l_header = False
@@ -298,11 +303,57 @@ def read_sco(file):
     matls_from_o3d = set()
     meshs_from_sco = set()
     try:
-        fole = open(file, 'r', encoding='utf-8',errors="ignore").readlines()
+        fole = open(file, 'r', encoding='utf-8', errors="ignore").readlines()
     except FileNotFoundError:
         print(f'File {file} not found.')
-        with open("did_not_pack.txt", 'a') as f:
-            f.write(f'{file}\n')
+        #with open("did_not_pack.txt", 'a') as f:
+            #f.write(f'{file}\n')
+        return matls_from_o3d, meshs_from_sco
+    fole = [each.strip() for each in fole if each.strip() != '']
+    count = 0
+    file_directory = os.path.dirname(file)
+    # print(file_directory)
+    # exit()
+    # print(file,62+4565)
+    # exit()
+    while count < len(fole):
+        # print(fole[count])
+        if fole[count] == '[mesh]':
+            o3dfile = fole[count + 1].strip()
+            # print(o3dfile)
+            # exit()
+            try:
+                o3d_path = os.path.join(file_directory, o3dfile)
+                o3d = open(o3d_path, 'rb')
+            except FileNotFoundError:
+                print(f'File {o3dfile} not found.')
+                count += 1
+                continue
+            o3d_bytes = o3d.read()
+            o3ddd = import_o3d(o3d_bytes, o3dfile)
+            matls = o3ddd[3]
+            for matl in matls:
+                # find strings with texture name
+                if matl[4] != None:
+                    matls_from_o3d.add(matl[4])
+            meshs_from_sco.add(o3dfile)
+
+        if fole[count] == '[matl]':
+            matlfile = fole[count + 1].strip()
+            matls_from_o3d.add(matlfile)
+        count += 1
+    return matls_from_o3d, meshs_from_sco
+
+
+def read_sco(file):
+    matls_from_o3d = set()
+    meshs_from_sco = set()
+    try:
+        fole = open(file, 'r', encoding='utf-8', errors="ignore").readlines()
+    except FileNotFoundError:
+        print(f'File {file} not found.')
+        #with open("did_not_pack.txt", 'a') as f:
+            #f.write(f'{file}\n')
         return matls_from_o3d, meshs_from_sco
     fole = [each.strip() for each in fole if each.strip() != '']
     count = 0
@@ -327,7 +378,7 @@ def read_sco(file):
             o3ddd = import_o3d(o3d_bytes, o3dfile)
             matls = o3ddd[3]
             for matl in matls:
-                #find strings with texture name
+                # find strings with texture name
                 if matl[4] != None:
                     matls_from_o3d.add(matl[4])
             meshs_from_sco.add(o3dfile)
@@ -339,16 +390,14 @@ def read_sco(file):
     return matls_from_o3d, meshs_from_sco
 
 
-
 def read_sli(file):
     # print(file)
     try:
-        sli = open(file, 'r', encoding='utf-8',errors="ignore").readlines()
+        sli = open(file, 'r', encoding='utf-8', errors="ignore").readlines()
     except FileNotFoundError:
         print(f'File {file} not found.')
-        missing_files.append(f'{file}\n')
-        # with open("did_not_pack.txt", 'a') as f:
-            # f.write(f'{file}\n')
+        #with open("did_not_pack.txt", 'a') as f:
+            #f.write(f'{file}\n')
         return set()
     sli = [each.strip() for each in sli if each.strip() != '']
     matls_from_sli = set()
@@ -361,34 +410,31 @@ def read_sli(file):
         count += 1
     return matls_from_sli
 
+
 def pack_files(source_dir, output_zip_file, file_paths):
+    #open("did_not_pack.txt", 'w').close()
     file_ls = []
     folder_ls = []
-    global missing_files
-    missing_files = []  # List to store missing files with \n at the end
-
     file_paths = [each.strip() for each in file_paths if each.strip() != '']
+    global missing_files
+    missing_files = []
     for each1 in file_paths:
-        # Remove the inner loop and add conditional checks
         if each1.endswith('.sco'):
-            full_sco_path = os.path.join(source_dir, each1)
-            aaa = read_sco(full_sco_path)  # Now properly scoped
-            # Process SCO files
+            aaa = read_sco(os.path.join(source_dir, each1))
             for each2 in aaa[0]:
                 if each2 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/texture/{each2}")
             for each3 in aaa[1]:
                 if each3 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/model/{each3}")
-
-        elif each1.endswith('.sli'):  # <--- ADD EXPLICIT ELIF
+        if each1.endswith('.sli'):
+            # print(each1)
             aaa = read_sli(os.path.join(source_dir, each1))
             print(aaa)
             for each2 in aaa:
                 if each2 not in file_paths:
                     file_ls.append(f"{os.path.dirname(each1)}/texture/{each2}")
-
-        if each1.endswith('\\*'):  # <--- SEPARATE WILDCARD HANDLING
+        if each1.endswith('\\*'):
             each1 = each1[:-1]
             folder_ls.append(each1)
 
@@ -402,7 +448,9 @@ def pack_files(source_dir, output_zip_file, file_paths):
                 print(full_path, file_path)
             except FileNotFoundError:
                 print(f'File {full_path} not found.')
-                # missing_files.append(f'{full_path}\n')  # Append with \n
+                missing_files.append(f'{full_path}\n')  # Append with \n
+                #with open("did_not_pack.txt", 'a') as f:
+                    #f.write(f'{full_path}\n')
                 continue
 
         # Include additional files from the lists
@@ -414,11 +462,15 @@ def pack_files(source_dir, output_zip_file, file_paths):
                     print(full_path, file_path)
                 except FileNotFoundError:
                     print(f'File {full_path} not found.')
-                    # missing_files.append(f'{full_path}\n')  # Append with \n
+                    missing_files.append(f'{full_path}\n')  # Append with \n
+                    #with open("did_not_pack.txt", 'a') as f:
+                        #f.write(f'{full_path}\n')
                     continue
             else:
                 print(f'File {full_path} not found.')
-                # missing_files.append(f'{full_path}\n')  # Append with \n
+                missing_files.append(f'{full_path}\n')  # Append with \n
+                #with open("did_not_pack.txt", 'a') as f:
+                    #f.write(f'{full_path}\n')
                 continue
         for folders in folder_ls:
             folder_path = os.path.join(source_dir, folders)
@@ -431,50 +483,54 @@ def pack_files(source_dir, output_zip_file, file_paths):
                             print(file_full_path, os.path.relpath(file_full_path, source_dir))
                         except FileNotFoundError:
                             print(f'File {file_full_path} not found.')
-                            # missing_files.append(f'{file_full_path}\n')  # Append with \n
+                            missing_files.append(f'{full_path}\n')  # Append with \n
+                            #with open("did_not_pack.txt", 'a') as f:
+                                #f.write(f'{file_full_path}\n')
                             continue
     return missing_files
+
+
 '''def return_missing_files_list():
     global missing_files
     return missing_files'''
 
-    # print(file_paths)
+# print(file_paths)
 
 
-    # with zipfile.ZipFile(output_zip_file, 'w') as zip_file:
-    #     for file_path in file_paths:
-    #         print(file_path)
-    #         full_path = os.path.join(source_dir, file_path)
-    #         zip_file.write(full_path, file_path)
-    #         # print(full_path, file_path,file_path.strip().endswith('.sco'))
-    #         if file_path.strip().endswith('.sco'):
-    #             matls_from_sco = read_sco(full_path)
-    #             print(matls_from_sco)
-    #             for matl in matls_from_sco[0]:
-    #                 matl_path = os.path.join(source_dir, 'texture', matl)
-    #                 if os.path.exists(matl_path):
-    #                     zip_file.write(matl_path, os.path.relpath(matl_path, source_dir))
-    #                     print(matl_path,os.path.relpath(matl_path, source_dir))
-    #             for mesh in matls_from_sco[1]:
-    #                 mesh_path = os.path.join(source_dir, 'model', mesh)
-    #                 if os.path.exists(mesh_path):
-    #                     zip_file.write(mesh_path, os.path.relpath(mesh_path, source_dir))
-    #                     print(matl_path,os.path.relpath(mesh_path, source_dir))
-    #         if file_path.endswith('.sli'):
-    #             matls_from_sli = read_sli(full_path)
-    #             for matl in matls_from_sli:
-    #                 matl_path = os.path.join(source_dir, 'texture', matl)
-    #                 if os.path.exists(matl_path):
-    #                     zip_file.write(matl_path, os.path.relpath(matl_path, source_dir))
-    #                     print(matl_path,os.path.relpath(matl_path, source_dir))
-            # # Include 'model' and 'texture' folders and their contents
-            # for folder in ['model', 'texture']:
-            #     folder_path = os.path.join(os.path.dirname(full_path), folder)
-            #     if os.path.exists(folder_path):
-            #         for root, _, files in os.walk(folder_path):
-            #             for file in files:
-            #                 file_full_path = os.path.join(root, file)
-            #                 zip_file.write(file_full_path, os.path.relpath(file_full_path, source_dir))
+# with zipfile.ZipFile(output_zip_file, 'w') as zip_file:
+#     for file_path in file_paths:
+#         print(file_path)
+#         full_path = os.path.join(source_dir, file_path)
+#         zip_file.write(full_path, file_path)
+#         # print(full_path, file_path,file_path.strip().endswith('.sco'))
+#         if file_path.strip().endswith('.sco'):
+#             matls_from_sco = read_sco(full_path)
+#             print(matls_from_sco)
+#             for matl in matls_from_sco[0]:
+#                 matl_path = os.path.join(source_dir, 'texture', matl)
+#                 if os.path.exists(matl_path):
+#                     zip_file.write(matl_path, os.path.relpath(matl_path, source_dir))
+#                     print(matl_path,os.path.relpath(matl_path, source_dir))
+#             for mesh in matls_from_sco[1]:
+#                 mesh_path = os.path.join(source_dir, 'model', mesh)
+#                 if os.path.exists(mesh_path):
+#                     zip_file.write(mesh_path, os.path.relpath(mesh_path, source_dir))
+#                     print(matl_path,os.path.relpath(mesh_path, source_dir))
+#         if file_path.endswith('.sli'):
+#             matls_from_sli = read_sli(full_path)
+#             for matl in matls_from_sli:
+#                 matl_path = os.path.join(source_dir, 'texture', matl)
+#                 if os.path.exists(matl_path):
+#                     zip_file.write(matl_path, os.path.relpath(matl_path, source_dir))
+#                     print(matl_path,os.path.relpath(matl_path, source_dir))
+# # Include 'model' and 'texture' folders and their contents
+# for folder in ['model', 'texture']:
+#     folder_path = os.path.join(os.path.dirname(full_path), folder)
+#     if os.path.exists(folder_path):
+#         for root, _, files in os.walk(folder_path):
+#             for file in files:
+#                 file_full_path = os.path.join(root, file)
+#                 zip_file.write(file_full_path, os.path.relpath(file_full_path, source_dir))
 
 '''def read_file_paths(file_list_path):
     with open(file_list_path, 'r') as file:

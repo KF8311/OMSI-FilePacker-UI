@@ -1,4 +1,4 @@
-('D:\\Github\\OMSI-FilePacker-UI\\build\\omsi-file-packer\\PYZ-00.pyz',
+('D:\\Github\\OMSI-FilePacker-UI\\build\\OMSI-File-Packer\\PYZ-00.pyz',
  [('__future__',
    'C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\__future__.py',
    'PYMODULE'),
