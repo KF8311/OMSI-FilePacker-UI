@@ -1,27 +1,38 @@
-# OMSI-FilePacker
+# OMSI FilePacker UI
 
-Packs scenery objects, splines, and their corresponding textures and models from a provided list.
+Easily pack OMSI scenery objects, splines, and their associated textures/models into a single ZIP file from a provided list.
 
-- **Credit**  
-  [Thomas Mathieson and his Blender o3d Plugin](https://github.com/space928/Blender-O3D-IO-Public) <br>
-  [KC x RT Workshop and the Missing Files Packing Python scipt](https://github.com/lmoadeck-Lunity/OMSI-FilePacker/tree/main)
+---
 
-## Instructions
+## Features
 
-~1. Place the script in the root folder of your OMSI installation, e.g., `X:\OMSI 2 Steam Edition` or `X:\SteamLibrary\steamapps\common\OMSI 2`.~ <br><br>
-~2. Create a text file named `file_paths.txt` (or a different name, which can be changed inside the script) and add the filenames of the scenery objects and splines you want to pack.~ <br><br>
-   *Note:* To pack a whole folder, end the file path with `\*`. <br><br>
-3. Run the script.<br>
-<br>
-4. You will receive a ZIP file ~and a `did not find.txt` file listing any missing files.~ <br>
-<br>
-5. TLDR: Just download the exe: [Download OMSI Missing Files Packer UI](https://raw.githubusercontent.com/KF8311/OMSI-FilePacker-UI/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
-<br>
-<br>
-6. TLDR2: If you have [Python](https://www.python.org/downloads/) 3.12+ installed, or you are worrying the "unsafe" .exe file, you may also download the frontend.py AND backend.py (but remove everything about ico) and compile the frontend.py by using Powershell or Command Prompt
-Both ways, you can use the Powershell to see the log of the operation
+- Collects all required files (objects, splines, textures, models) based on your input list
+- Supports packing entire folders (using `*` wildcard)
+- Outputs a ready-to-use ZIP archive
+- Optionally lists any missing files
 
-## Example Input "Input Missing Objects"
+---
+
+## Quick Start
+
+### 1. Download & Run
+
+- **Recommended:** [Download OMSI Missing Files Packer UI (.exe)](https://raw.githubusercontent.com/KF8311/OMSI-FilePacker-UI/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
+    - No installation required. Just run the executable.
+
+**OR**
+
+- If you prefer Python, download both `frontend.py` and `backend.py` (remove any icon/ico references), and run `frontend.py` with Python 3.12+.
+    - [Download Python](https://www.python.org/downloads/)
+    - Run via PowerShell or Command Prompt for log output.
+
+---
+
+### 2. Prepare Your Input List
+
+Create a text file (e.g., `file_paths.txt`) listing the scenery objects and splines you want to pack, one per line. To pack a whole folder, end the path with `\*`.
+
+**Example:**
 
 ```txt
 Sceneryobjects\3dtranstudio\hkstreet\ped_1_5_end_a.sco
@@ -32,4 +43,23 @@ Splines\Splines\Splines\taxidriverhk_nopaths\2lanes_noped_verywide.sli
 Sceneryobjects\Map E31\*
 ```
 
-![Photo](OMSI_file_packer_showcase_photo.png)
+---
+
+### 3. Run the Program
+
+
+1. Run the program
+2. Select your input file if prompted
+3. The program will create a ZIP file with all found files
+4. A log or list of missing files will be generated if any files are not found
+
+---
+
+## Credits
+
+- [Thomas Mathieson – Blender o3d Plugin](https://github.com/space928/Blender-O3D-IO-Public)
+- [KC x RT Workshop – Missing Files Packing Python Script](https://github.com/lmoadeck-Lunity/OMSI-FilePacker/tree/main)
+
+---
+
+![OMSI FilePacker UI Screenshot](OMSI_file_packer_showcase_photo.png)
