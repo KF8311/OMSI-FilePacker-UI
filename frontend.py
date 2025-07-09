@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import font, filedialog, messagebox
-import backend
+import backend as bg
 import os
 import winreg
 import sys
 
 # missing_files = []
 # frontend.py
-
+backend = bg.Backend()
 REG_PATH = r"Software\MyTkApp"
 REG_VALUE_NAME = "TextboxValue"
 def resource_path(relative_path):
