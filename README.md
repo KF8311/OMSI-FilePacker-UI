@@ -17,7 +17,7 @@ Easily pack OMSI scenery objects, splines, and their associated textures/models 
 
 ### 1. Download & Run
 
-- **Recommended:** [Download OMSI Missing Files Packer UI (.exe)](https://raw.githubusercontent.com/KF8311/OMSI-FilePacker-UI/48a2391181d22896f53f129aef050ca026911a18/dist/OMSI%20Missing%20Files%20Packer%20UI.exe)
+- **Recommended:** [Download OMSI Missing Files Packer UI (.exe)](https://github.com/KF8311/OMSI-FilePacker-UI/releases/download/v.1.0.0/frontend.exe)
     - No installation required. Just run the executable.
 
 **OR**
