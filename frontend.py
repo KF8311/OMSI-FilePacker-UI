@@ -7,7 +7,7 @@ import sys
 
 # missing_files = []
 # frontend.py
-backend = bg.Backend()
+backend = bg.BE()
 REG_PATH = r"Software\MyTkApp"
 REG_VALUE_NAME = "TextboxValue"
 def resource_path(relative_path):
