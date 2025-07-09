@@ -49,31 +49,28 @@ class BE:
 
 
     def read_omsi_path(self, input_path):
-        global source_directory
-        if source_directory.strip():
-            source_directory = input_path.strip()
+        if self.source_directory.strip():
+            self.source_directory = input_path.strip()
         else:
-            source_directory = '.'
-        print(f"OMSI Path Set: {source_directory}")
+            self.source_directory = '.'
+        print(f"OMSI Path Set: {self.source_directory}")
 
 
     def read_zip_file_name(self, input_name):
-        global output_zip_file
         if input_name.strip():
-            output_zip_file = os.path.join(source_directory, f"{input_name}.zip")
+            self.output_zip_file = os.path.join(self.source_directory, f"{input_name}.zip")
         else:
-            output_zip_file = os.path.join(source_directory, "packed_files.zip")
-        print(f"Output ZIP: {output_zip_file}")
+            self.output_zip_file = os.path.join(self.source_directory, "packed_files.zip")
+        print(f"Output ZIP: {self.output_zip_file}")
 
 
     def read_missing_files(self, missing_files_list):
-        global file_paths
-        file_paths = [line.strip() for line in missing_files_list.splitlines() if line.strip()]
-        print(f"Files to Pack: {file_paths}")
+        self.file_paths = [line.strip() for line in missing_files_list.splitlines() if line.strip()]
+        print(f"Files to Pack: {self.file_paths}")
 
 
     def return_missing_files_list(self):
-        return missing_files
+        return self.missing_files
 
 
     def log(self, *args):
@@ -371,8 +368,7 @@ class BE:
         file_ls = []
         folder_ls = []
         file_paths = [each.strip() for each in file_paths if each.strip() != '']
-        global missing_files
-        missing_files = []
+        self.missing_files = []
         
         # Size limit (14GB in bytes)
         size_limit = 14 * 1024 * 1024 * 1024
@@ -432,7 +428,7 @@ class BE:
                 print(f"{full_path} - {file_size/1024/1024:.2f} MB, Total: {current_size/1024/1024/1024:.2f} GB")
             except FileNotFoundError:
                 print(f'File {full_path} not found.')
-                missing_files.append(f'{full_path}\n')
+                self.missing_files.append(f'{full_path}\n')
                 continue
 
         # Include additional files from the lists
@@ -458,11 +454,11 @@ class BE:
                     print(f"{full_path} - {file_size/1024/1024:.2f} MB, Total: {current_size/1024/1024/1024:.2f} GB")
                 except FileNotFoundError:
                     print(f'File {full_path} not found.')
-                    missing_files.append(f'{full_path}\n')
+                    self.missing_files.append(f'{full_path}\n')
                     continue
             else:
                 print(f'File {full_path} not found.')
-                missing_files.append(f'{full_path}\n')
+                self.missing_files.append(f'{full_path}\n')
                 continue
                 
         # Process folders
@@ -491,7 +487,7 @@ class BE:
                             print(f"{file_full_path} - {file_size/1024/1024:.2f} MB, Total: {current_size/1024/1024/1024:.2f} GB")
                         except FileNotFoundError:
                             print(f'File {file_full_path} not found.')
-                            missing_files.append(f'{file_full_path}\n')
+                            self.missing_files.append(f'{file_full_path}\n')
                             continue
         
         # Close the final zip file
@@ -501,7 +497,7 @@ class BE:
         if current_part > 1:
             print(f"Created {current_part} zip parts due to 14GB size limit")
         
-        return missing_files
+        return self.missing_files
 
 
     '''def return_missing_files_list():
