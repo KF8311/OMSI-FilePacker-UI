@@ -27,8 +27,12 @@ Easily pack OMSI scenery objects, splines, and their associated textures/models 
     - Run via PowerShell or Command Prompt for log output.
 
 ---
+### 2. Prepare Your OMSI Directory
 
-### 2. Prepare Your Input List
+Press the folder icon in the UI to select your OMSI installation directory. This is where the program will look for the files listed in your input file.
+After choosing the directory, close the app and reopen it to ensure the path is set correctly.
+
+### 3. Prepare Your Input List
 
 Create a text file (e.g., `file_paths.txt`) listing the scenery objects and splines you want to pack, one per line. To pack a whole folder, end the path with `\*`.
 
@@ -45,7 +49,7 @@ Sceneryobjects\Map E31\*
 
 ---
 
-### 3. Run the Program
+### 4. Run the Program
 
 
 1. Run the program
