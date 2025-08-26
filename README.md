@@ -34,7 +34,7 @@ After choosing the directory, close the app and reopen it to ensure the path is 
 
 ### 3. Prepare Your Input List
 
-Create a text file (e.g., `file_paths.txt`) listing the scenery objects and splines you want to pack, one per line. To pack a whole folder, end the path with `\*`.
+Paste text listing the scenery objects and splines you want to pack, one per line onto the `Input Missing Objects` field. To pack a whole folder, end the path with `\*`.
 
 **Example:**
 
@@ -50,7 +50,6 @@ Sceneryobjects\Map E31\*
 ---
 
 ### 4. Run the Program
-
 
 1. Run the program
 2. Select your input file if prompted
